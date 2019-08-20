@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/arcade', (error) => {
     if (error) {
@@ -11,9 +12,11 @@ mongoose.connect('mongodb://localhost:27017/arcade', (error) => {
     console.log('Database Connected');
 })
 
+const PORT = 8080;
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors())
 
 // Models
 require('./models/win.model');
@@ -23,4 +26,4 @@ require('./models/win.model');
 // Routes
 require('./routes/wins.routes')(app);
 
-app.listen(8080, () => console.log('Arcade server running on port 3000'));
+app.listen(PORT, () => console.log(`Arcade server running on port ${PORT}`));
